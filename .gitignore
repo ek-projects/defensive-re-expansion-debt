@@ -10,3 +10,5 @@ outputs/
 vendor/
 figures/dred_exposure_risk.png
 figures/dred_static_vs_dynamic.png
+
+video/
