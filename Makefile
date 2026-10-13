@@ -1,7 +1,7 @@
 PYTHON ?= python3
 VENDOR := vendor/skillcorner-opendata
 
-.PHONY: install vendor data data-public-all validate validate-public-all epv robustness adversarial hardening focused focused-public-all shot-audit case bodypose-data bodypose test all clean-derived
+.PHONY: install vendor data validate epv robustness adversarial hardening focused shot-audit case bodypose-data bodypose test release-audit all clean-derived
 
 install:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -12,14 +12,8 @@ vendor:
 data: vendor
 	PYTHONPATH=src $(PYTHON) scripts/fetch_dataset.py
 
-data-public-all: vendor
-	PYTHONPATH=src $(PYTHON) scripts/fetch_dataset.py --all-public-matches
-
 validate: data
 	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py
-
-validate-public-all:
-	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py --all-public-matches
 
 epv: validate
 	PYTHONPATH=src $(PYTHON) scripts/validate_epv.py
@@ -32,9 +26,6 @@ focused: validate
 
 shot-audit: focused
 
-focused-public-all:
-	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py --all-public-matches
-
 case: focused
 	PYTHONPATH=src $(PYTHON) scripts/case_study.py
 
@@ -46,6 +37,9 @@ bodypose: bodypose-data
 
 test:
 	PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -m pytest -q -p no:cacheprovider
+
+release-audit:
+	$(PYTHON) scripts/release_audit.py
 
 all: data validate epv case test
 

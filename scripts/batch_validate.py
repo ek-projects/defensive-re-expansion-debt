@@ -139,13 +139,14 @@ def match_meta(match_dir: Path) -> dict:
     }
 
 
-def process_all(raw_root: Path, processed: Path, *, official_only: bool = True) -> pd.DataFrame:
+def process_all(raw_root: Path, processed: Path) -> pd.DataFrame:
     processed.mkdir(parents=True, exist_ok=True)
     all_breaks = []
     match_rows = []
-    dirs = sorted([p for p in raw_root.iterdir() if p.is_dir() and p.name.isdigit()], reverse=True)
-    if official_only:
-        dirs = [p for p in dirs if int(p.name) in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET]
+    dirs = sorted(
+        [p for p in raw_root.iterdir() if p.is_dir() and p.name.isdigit() and int(p.name) in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET],
+        reverse=True,
+    )
     for i, match_dir in enumerate(dirs, 1):
         meta = match_meta(match_dir)
         print(f"[{i}/{len(dirs)}] {meta['match_id']} {meta['home_team']} - {meta['away_team']}", flush=True)
@@ -262,11 +263,6 @@ def main() -> None:
     ap.add_argument("--processed", type=Path, default=Path("data/processed"))
     ap.add_argument("--outputs", type=Path, default=Path("outputs"))
     ap.add_argument("--analyze-only", action="store_true")
-    ap.add_argument(
-        "--all-public-matches",
-        action="store_true",
-        help="research extension only: process every locally available public match instead of the 10 official Dynamic Events matches",
-    )
     args = ap.parse_args()
     args.outputs.mkdir(parents=True, exist_ok=True)
     if args.analyze_only:
@@ -274,7 +270,7 @@ def main() -> None:
         for c in ("lead_to_shot", "lead_to_goal"):
             episodes[c] = episodes[c].astype(str).str.lower().isin(["true", "1", "yes"])
     else:
-        episodes = process_all(args.raw, args.processed, official_only=not args.all_public_matches)
+        episodes = process_all(args.raw, args.processed)
     result = analyze(episodes)
     (args.outputs / "validation_summary.json").write_text(json.dumps(result, indent=2, sort_keys=True))
     (args.outputs / "validation_report.md").write_text(report_md(result))

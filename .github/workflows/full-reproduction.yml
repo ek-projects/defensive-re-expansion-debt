@@ -1,0 +1,47 @@
+name: Full reproduction
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_bodypose:
+        description: 'Also download and reproduce the optional ~1.2 GB Body Pose audit'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Reproduce official 10-match analysis from competition data
+        run: make all
+      - name: Reproduce post-submission robustness and adversarial audits
+        run: make hardening
+      - name: Optional Body Pose mechanism audit
+        if: ${{ inputs.run_bodypose }}
+        run: make bodypose
+      - name: Submission/release audit
+        run: python scripts/release_audit.py
+      - name: Upload compact derived reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dred-derived-reports
+          path: |
+            outputs/*.json
+            outputs/*.md
+            figures/*.png
+          if-no-files-found: error
+          retention-days: 14

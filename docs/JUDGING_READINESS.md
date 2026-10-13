@@ -30,4 +30,15 @@ Remaining opportunity: if a revised submission is published before the deadline,
 
 **State: materially improved in v2 candidate.** The core DRED formula now lives in a provider-agnostic tested API (`compute_dred`, `contraction_excess`, `standardize_width`), not only in analysis scripts. The Makefile has explicit dependencies for rebuilding derived data and the adversarial analysis is reproducible.
 
-Fresh-clone derived-data reproduction is now verified: 9/9 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The remaining publication gate is the public GitHub push, currently blocked by the connected GitHub integration's ref-write permission rather than by the repository itself.
+Fresh-clone derived-data reproduction is now verified: 9/9 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The v2 candidate is published on its own GitHub branch with a repository-scoped deploy key. CI now covers Python 3.11–3.14, wheel build/install smoke testing and a submission-constraint audit; a manual workflow reproduces the full official 10-match pipeline. Competition-data execution is hard-pinned to the 10 official match IDs.
+
+
+## 2026-10-13 competition-grade gate
+
+- README: 872 words, 2 figures, 0 tables.
+- Licence: MIT; package metadata uses SPDX `MIT`.
+- Base package dependency: NumPy only; analysis stack is optional/development metadata.
+- Automated release audit rejects tracked competition data/media and wider-match execution paths.
+- Public CI definition: Python 3.11–3.14 tests + release audit + wheel build/isolated-install smoke test.
+- Manual full-reproduction workflow: official 10-match rebuild + robustness/adversarial audit, with Body Pose optional.
+- Historical wider public-data exploration remains recorded in the research log for transparency, but the v2 executable pipeline does not expose it and no result from outside the frozen 10-match scope is submission evidence.

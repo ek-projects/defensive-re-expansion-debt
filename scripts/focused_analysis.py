@@ -363,23 +363,16 @@ def main() -> None:
     ap.add_argument("--raw", type=Path, default=Path("data/raw"))
     ap.add_argument("--outputs", type=Path, default=Path("outputs"))
     ap.add_argument("--figures", type=Path, default=Path("figures"))
-    ap.add_argument(
-        "--all-public-matches",
-        action="store_true",
-        help="research extension only; primary submission analysis uses the 10 official Dynamic Events matches",
-    )
     args = ap.parse_args()
     args.outputs.mkdir(parents=True, exist_ok=True)
     episodes = pd.read_csv(args.episodes)
-    if not args.all_public_matches:
-        episodes = episodes[episodes["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
+    episodes = episodes[episodes["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
     for c in ["lead_to_shot", "lead_to_goal"]:
         episodes[c] = episodes[c].astype(str).str.lower().isin(["true", "1", "yes"])
     enriched = enrich(episodes, args.raw)
     enriched.to_csv(args.outputs / "episodes_enriched.csv", index=False)
     matches = pd.read_csv(args.matches)
-    if not args.all_public_matches:
-        matches = matches[matches["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
+    matches = matches[matches["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
     result = analyze(enriched, matches)
     (args.outputs / "dred_validation.json").write_text(json.dumps(result, indent=2, sort_keys=True))
     text = report(result)

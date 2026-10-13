@@ -15,6 +15,11 @@
 - Submission-v2 candidate exposes DRED as a provider-agnostic tested Python API; one-match integration regeneration shows zero numeric drift in DRED outputs.
 - Fresh-clone derived-data smoke test completed: 9/9 tests, robustness/adversarial JSON identical, aligned-validation figure SHA-256 identical.
 - Clean temporary virtualenv install completed successfully; package import and API smoke test passed.
+- GitHub deploy-key publication path verified; `submission-v2-candidate` is public while `main` remains frozen.
+- Competition-grade CI added for Python 3.11–3.14 plus wheel build/clean-install smoke test.
+- Manual full-reproduction GitHub workflow added for the official 10-match pipeline.
+- Release audit added: README limits, MIT licence, no tracked competition data/media, and no wider-match execution path.
+- V2 executable data scope hard-pinned to the 10 official match IDs.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository
@@ -46,7 +51,7 @@
 
 ## README / video
 
-- [x] Final README word/image-count check after last edit (595 words, 2 figures).
+- [x] V2 README competition check: 872 words, 2 figures, 0 tables.
 - [x] Video script rewritten around EPV + Body Pose.
 - [x] 58.5-second 1080p visual cut generated reproducibly.
 - [x] Participant-voice mux/normalisation pipeline implemented and tested.

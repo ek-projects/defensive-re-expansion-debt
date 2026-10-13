@@ -72,14 +72,17 @@ So shot-link prediction was **demoted rather than defended**. It remains in `mak
 
 ## Reproduce
 
-Competition data is not committed to this repository.
+Competition data is not committed to this repository. From a clean clone:
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
 make install
 make all
 ```
 
-`make all` downloads/verifies the official tracking data, computes DRED, reproduces the frozen submission analyses, builds the matched case study and runs tests.
+`make all` downloads/verifies the official tracking data, computes DRED, reproduces the frozen submission analyses, builds the matched case study and runs tests. `make release-audit` checks the submission constraints, licence and accidental inclusion of competition data/media. GitHub CI tests Python 3.11–3.14 and builds a wheel from scratch; a separate manual workflow reproduces the full 10-match analysis.
 
 Post-submission robustness and adversarial temporal checks are reproduced with:
 
@@ -93,7 +96,7 @@ Body Pose is optional because the two archives total about 1.2 GB:
 make bodypose
 ```
 
-The public-data 20-match exploration used during hypothesis development is available only through explicitly named `*-public-all` targets and is not primary submission evidence.
+Every runnable competition-data target is pinned to the 10 official match IDs encoded in `defensive_recovery.competition`; arbitrary or wider match fetching is intentionally rejected.
 
 ## Interpretation
 

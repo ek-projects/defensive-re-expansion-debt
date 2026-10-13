@@ -1,4 +1,4 @@
-"""Defensive Recovery Debt metrics for football tracking data."""
+"""Defensive Re-Expansion Debt metrics for football tracking data."""
 
 from .dred import DREDMetrics, compute_dred, contraction_excess, standardize_width
 from .geometry import ShapeMetrics, compute_shape_metrics

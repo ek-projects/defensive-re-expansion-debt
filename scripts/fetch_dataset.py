@@ -73,16 +73,22 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--vendor", type=Path, default=Path("vendor/skillcorner-opendata"))
     ap.add_argument("--out", type=Path, default=Path("data/raw"))
-    ap.add_argument("--match", action="append", dest="matches")
-    ap.add_argument("--all-public-matches", action="store_true", help="research extension: fetch all 20 public tracking matches")
+    ap.add_argument("--match", action="append", dest="matches", help="optional subset of the 10 official Analytics Cup match IDs")
     args = ap.parse_args()
     matches = json.loads((args.vendor / "data/matches.json").read_text())
-    ids = [str(m["id"]) for m in matches]
-    if not args.all_public_matches and not args.matches:
-        ids = [mid for mid in ids if int(mid) in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET]
+    available = {str(m["id"]) for m in matches}
+    official = {str(mid) for mid in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET}
+    missing = sorted(official - available)
+    if missing:
+        raise RuntimeError(f"official Analytics Cup matches missing from vendor dataset: {missing}")
     if args.matches:
         wanted = set(args.matches)
-        ids = [mid for mid in ids if mid in wanted]
+        disallowed = sorted(wanted - official)
+        if disallowed:
+            ap.error(f"--match is restricted to official Analytics Cup IDs; rejected: {disallowed}")
+        ids = sorted(wanted, reverse=True)
+    else:
+        ids = sorted(official, reverse=True)
     args.out.mkdir(parents=True, exist_ok=True)
     failures = []
     for i, mid in enumerate(ids, 1):

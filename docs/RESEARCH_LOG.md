@@ -17,7 +17,7 @@ For robust within-match/team/OOP-phase width deviation `z_width(t)`:
 - DRED = integral of contraction over the recovery window.
 - DRED intensity = mean contraction over observed frames.
 
-The wider 20-match public-data pass helped form the hypothesis and is therefore exploratory only.
+A historical wider public-data pass helped form the hypothesis and is recorded here for transparency. No result from matches outside the frozen 10-match competition scope is used as submission evidence, and the v2 pipeline no longer exposes a wider-match execution path.
 
 ## Official competition scope
 
@@ -25,7 +25,7 @@ Primary labelled analysis was rebuilt from scratch on the 10 Analytics Cup match
 
 `1886347, 1899585, 1925299, 1953632, 1996435, 2006229, 2011166, 2013725, 2015213, 2017461`
 
-The code defaults to those IDs. `--all-public-matches` is explicitly labelled a research extension.
+The v2 code is hard-pinned to those IDs. Dataset fetching, batch validation and focused analysis reject or filter any match outside this set.
 
 ## Shot-link result — and why it was demoted
 

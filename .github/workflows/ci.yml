@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, submission-v2-candidate]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install project and development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Run unit tests
+        run: make test
+      - name: Run submission/release audit
+        run: python scripts/release_audit.py
+
+  package:
+    name: Build wheel and smoke-test clean install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Build distributions
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+      - name: Install wheel in isolated virtual environment
+        shell: bash
+        run: |
+          python -m venv /tmp/dred-wheel
+          /tmp/dred-wheel/bin/python -m pip install --upgrade pip
+          /tmp/dred-wheel/bin/python -m pip install dist/*.whl
+          /tmp/dred-wheel/bin/python - <<'PYCODE'
+          from defensive_recovery import compute_dred
+          result = compute_dred([0.0, -1.5, -2.0], fps=10.0)
+          assert result.n_samples == 3
+          assert result.integral > 0
+          print(result)
+          PYCODE
