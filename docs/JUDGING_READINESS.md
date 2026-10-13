@@ -22,7 +22,7 @@ Use `docs/RELATED_WORK.md` and avoid “first ever” wording.
 
 ## Communication
 
-**State: strong.** The one-minute visual cut is 58.5 seconds and the core story is simple: snapshot compactness misses whether the defence reopens after penetration. The current submitted video remains directionally correct, but the candidate README now explains the cleaner recovery-window validation.
+**State: strong.** The submitted YouTube video is public, 59 seconds, and YouTube automatic captions confirm spoken English narration matching the intended script. The core story is simple: snapshot compactness misses whether the defence reopens after penetration. The current submitted video remains directionally correct, but the candidate README now explains the cleaner recovery-window validation.
 
 Remaining opportunity: if a revised submission is published before the deadline, ensure the video and README tell the same validation story. Do not overload the one-minute pitch with robustness statistics.
 
@@ -30,4 +30,4 @@ Remaining opportunity: if a revised submission is published before the deadline,
 
 **State: materially improved in v2 candidate.** The core DRED formula now lives in a provider-agnostic tested API (`compute_dred`, `contraction_excess`, `standardize_width`), not only in analysis scripts. The Makefile has explicit dependencies for rebuilding derived data and the adversarial analysis is reproducible.
 
-Remaining gate before publication: fresh-clone derived-data smoke test and public GitHub push. The latter is currently blocked by the connected GitHub integration's ref-write permission, not by the repository itself.
+Fresh-clone derived-data reproduction is now verified: 9/9 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The remaining publication gate is the public GitHub push, currently blocked by the connected GitHub integration's ref-write permission rather than by the repository itself.

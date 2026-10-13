@@ -13,6 +13,8 @@
 - Post-submission EPV robustness audit completed on 2026-10-13 on isolated branch; 20/20 threshold × horizon combinations positive and all 10 leave-one-match-out estimates positive.
 - Post-submission adversarial/temporal audit completed on 2026-10-13; aligned-window net EPV adjusted r=0.224, median match r=0.209, positive in 9/10 matches. This is post-submission evidence only.
 - Submission-v2 candidate exposes DRED as a provider-agnostic tested Python API; one-match integration regeneration shows zero numeric drift in DRED outputs.
+- Fresh-clone derived-data smoke test completed: 9/9 tests, robustness/adversarial JSON identical, aligned-validation figure SHA-256 identical.
+- Clean temporary virtualenv install completed successfully; package import and API smoke test passed.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository
@@ -49,8 +51,8 @@
 - [x] 58.5-second 1080p visual cut generated reproducibly.
 - [x] Participant-voice mux/normalisation pipeline implemented and tested.
 - [x] Matched case-study visual available for video.
-- [ ] Record participant narration (required by competition rules).
-- [ ] Assemble <=60 second video.
+- [x] Submitted public video contains spoken English narration matching the script (verified through YouTube automatic captions). Speaker identity is not machine-verifiable; competition rules require participant/teammate voice.
+- [x] Submitted YouTube video is public and 59 seconds.
 - [ ] Check readability on mobile.
 
 ## Submission

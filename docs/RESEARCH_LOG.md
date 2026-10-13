@@ -133,3 +133,11 @@ The candidate branch extracts the final DRED definition into `src/defensive_reco
 Integration validation on official match 1925299 regenerated all 134 line-break episodes. DRED/width-contraction output columns compared against the pre-refactor processed file with maximum absolute difference **0.0**. Core tests expanded from 5 to **9** and pass.
 
 This refactor changes packaging and reuse only; it does not change the metric or frozen submission evidence.
+
+## 2026-10-13 — v2 clean-reproduction verification
+
+The `submission-v2-candidate` branch was cloned into a separate temporary checkout with no derived `data/processed` or `outputs`. Only the already SHA-verified raw official data and SkillCorner vendor checkout were linked in. `make hardening` regenerated the full derived analysis successfully: **9/9 tests passed**, the robustness and adversarial JSON outputs were exactly equal to the source checkout, and `figures/dred_epv_aligned_validation.png` reproduced with the same SHA-256 (`14daee1682991ce13aafc168a77e570a5a5147d333bb62feb9e73483afffae00`).
+
+A separate clean Python virtual environment installed the package from `pyproject.toml`, passed all 9 tests and imported/executed `compute_dred` successfully.
+
+The public YouTube submission was also checked independently: it is public, reports 59 seconds, contains an audio track, and YouTube exposes English automatic captions that transcribe the expected DRED narration. This verifies spoken narration is present; automated checks do not establish speaker identity.
