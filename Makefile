@@ -1,7 +1,7 @@
 PYTHON ?= python3
 VENDOR := vendor/skillcorner-opendata
 
-.PHONY: install vendor data data-competition-20 validate validate-competition-20 epv robustness adversarial hardening focused focused-competition-20 shot-audit case bodypose-data bodypose test release-audit all clean-derived
+.PHONY: install vendor data data-competition-20 validate validate-competition-20 epv robustness adversarial hardening focused focused-competition-20 shot-audit case bodypose-data bodypose video video-audit test release-audit all clean-derived
 
 install:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -43,6 +43,12 @@ bodypose-data:
 
 bodypose: bodypose-data
 	PYTHONPATH=src $(PYTHON) scripts/bodypose_validate.py
+
+video:
+	$(PYTHON) scripts/build_video.py
+
+video-audit: video
+	PYTHONPATH=scripts $(PYTHON) scripts/video_audit.py
 
 test:
 	PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -m pytest -q -p no:cacheprovider

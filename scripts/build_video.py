@@ -20,23 +20,37 @@ DANGER = (255, 132, 110)
 FONT_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
-NARRATION = """A line break is only the start. Can the defence reopen and restore lateral coverage? Static compactness misses that.
+NARRATION = """A line break is only the start. The real question is whether the defence can reopen and restore lateral coverage.
 
-I built Defensive Re-Expansion Debt, or DRED. It compares live width with each team's normal width for that phase. DRED intensity rises when the defence stays abnormally narrow.
+I built Defensive Re-Expansion Debt, or DRED. It measures how long a defence stays abnormally narrow relative to its own normal width.
 
-Across 603 line-breaking possessions in ten official matches, higher DRED intensity was associated with greater SkillCorner EPV gain after controlling duration, starting EPV and static width. Eight matches were positive.
+Across 602 second-last-line-break events in ten official matches, higher DRED intensity was associated with greater SkillCorner EPV gain measured over the same recovery window. Nine of ten matches were positive.
 
-Body Pose supports the mechanism: contracted defences were less outward-oriented in both games.
+Body Pose supports the mechanism: contracted defences were less outward-oriented in both available games.
 
-DRED is an open-source coaching diagnostic for failed recovery after penetration—not a black-box prediction score.
+DRED is open source, reproducible, and designed as a coaching diagnostic for failed recovery after penetration—not a black-box prediction score.
 """
 
 SCENES = [
-    ("scene_01_hook.png", 8.5),
-    ("scene_02_metric.png", 12.5),
-    ("scene_03_epv.png", 19.0),
-    ("scene_04_pose.png", 10.0),
-    ("scene_05_close.png", 8.5),
+    ("scene_01_hook.png", 10.0),
+    ("scene_02_metric.png", 12.0),
+    ("scene_03_epv.png", 16.0),
+    ("scene_04_pose.png", 8.5),
+    ("scene_05_close.png", 12.0),
+]
+
+CAPTIONS = [
+    ("00:00:00,000", "00:00:05,000", "A line break is only the start."),
+    ("00:00:05,000", "00:00:10,000", "The real question is whether the defence can reopen and restore lateral coverage."),
+    ("00:00:10,000", "00:00:16,000", "I built Defensive Re-Expansion Debt, or DRED."),
+    ("00:00:16,000", "00:00:22,000", "It measures how long a defence stays abnormally narrow relative to its own normal width."),
+    ("00:00:22,000", "00:00:28,000", "Across 602 second-last-line-break events in ten official matches,"),
+    ("00:00:28,000", "00:00:34,000", "higher DRED intensity was associated with greater SkillCorner EPV gain measured over the same recovery window."),
+    ("00:00:34,000", "00:00:38,000", "Nine of ten matches were positive."),
+    ("00:00:38,000", "00:00:42,500", "Body Pose supports the mechanism:"),
+    ("00:00:42,500", "00:00:46,500", "contracted defences were less outward-oriented in both available games."),
+    ("00:00:46,500", "00:00:52,500", "DRED is open source, reproducible,"),
+    ("00:00:52,500", "00:00:58,500", "and designed as a coaching diagnostic for failed recovery after penetration—not a black-box prediction score."),
 ]
 
 
@@ -141,15 +155,16 @@ def scene_metric():
 def scene_epv():
     im = Image.new("RGBA", (W,H), BG + (255,))
     d = ImageDraw.Draw(im)
-    title_band(im, "Primary validation", "Higher DRED intensity tracks greater EPV gain.", "Adjusted within match for duration, starting EPV and static width.")
-    place_figure(im, FIGURES / "dred_epv_validation.png", (80, 385, 1325, 990))
-    d.rounded_rectangle((1370, 420, 1830, 920), 28, fill=(18,31,50))
-    d.text((1600, 485), "603", font=font(86, True), fill=ACCENT, anchor="ma")
-    d.text((1600, 575), "line-breaking possessions", font=font(28, True), fill=TEXT, anchor="ma")
-    d.text((1600, 665), "8 / 10", font=font(72, True), fill=ACCENT2, anchor="ma")
-    d.text((1600, 745), "matches positive", font=font(28, True), fill=TEXT, anchor="ma")
-    d.text((1600, 825), "median r = 0.154", font=font(31, True), fill=TEXT, anchor="ma")
-    d.text((1600, 870), "95% CI 0.044–0.268", font=font(27), fill=MUTED, anchor="ma")
+    title_band(im, "Primary validation", "DRED and EPV are aligned to the same recovery window.", "Higher DRED intensity is associated with greater attacking EPV gain during recovery.")
+    place_figure(im, FIGURES / "dred_epv_aligned_validation.png", (70, 390, 1320, 990))
+    d.rounded_rectangle((1360, 390, 1840, 950), 28, fill=(18,31,50))
+    d.text((1600, 455), "0.224", font=font(82, True), fill=ACCENT, anchor="ma")
+    d.text((1600, 545), "adjusted partial-rank", font=font(27, True), fill=TEXT, anchor="ma")
+    d.text((1600, 630), "602 events", font=font(35, True), fill=TEXT, anchor="ma")
+    d.text((1600, 715), "9 / 10", font=font(70, True), fill=ACCENT2, anchor="ma")
+    d.text((1600, 790), "matches positive", font=font(28, True), fill=TEXT, anchor="ma")
+    d.text((1600, 855), "median match r = 0.209", font=font(28, True), fill=TEXT, anchor="ma")
+    d.text((1600, 900), "95% CI 0.068–0.330", font=font(26), fill=MUTED, anchor="ma")
     return im
 
 
@@ -178,15 +193,10 @@ def scene_close():
 
 
 def write_srt():
-    # Full narration transcript, timed to the visual cut. Timing is intentionally generous for human delivery.
-    blocks = [
-        (1, "00:00:00,000", "00:00:08,500", "A line break is only the start. Can the defence reopen and restore lateral coverage? Static compactness misses that."),
-        (2, "00:00:08,500", "00:00:21,000", "I built Defensive Re-Expansion Debt, or DRED. It compares live width with each team's normal width for that phase. DRED intensity rises when the defence stays abnormally narrow."),
-        (3, "00:00:21,000", "00:00:40,000", "Across 603 line-breaking possessions in ten official matches, higher DRED intensity was associated with greater SkillCorner EPV gain after controlling duration, starting EPV and static width. Eight matches were positive."),
-        (4, "00:00:40,000", "00:00:50,000", "Body Pose supports the mechanism: contracted defences were less outward-oriented in both games."),
-        (5, "00:00:50,000", "00:00:58,500", "DRED is an open-source coaching diagnostic for failed recovery after penetration—not a black-box prediction score."),
-    ]
-    text = "\n\n".join(f"{i}\n{s} --> {e}\n{t}" for i,s,e,t in blocks) + "\n"
+    text = "\n\n".join(
+        f"{i}\n{start} --> {end}\n{caption}"
+        for i, (start, end, caption) in enumerate(CAPTIONS, start=1)
+    ) + "\n"
     (VIDEO / "dred_pitch_narration.srt").write_text(text)
 
 
@@ -202,10 +212,9 @@ def encode():
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "warning",
             "-threads", "1", "-filter_threads", "1",
             "-loop", "1", "-framerate", "30", "-t", str(duration), "-i", str(src),
-            "-f", "lavfi", "-t", str(duration), "-i", "anullsrc=r=48000:cl=stereo",
             "-vf", "format=yuv420p", "-r", "30",
             "-c:v", "libx264", "-threads", "1", "-crf", "18", "-preset", "medium",
-            "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart", str(seg),
+            "-an", "-movflags", "+faststart", str(seg),
         ]
         subprocess.run(cmd, check=True)
     concat = ASSETS / "concat.txt"

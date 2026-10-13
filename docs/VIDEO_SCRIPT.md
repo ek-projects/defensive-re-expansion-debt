@@ -1,36 +1,44 @@
-# 60-second submission video — DRED
+# 60-second submission video — DRED v2
 
-The Analytics Cup rules require the one-minute YouTube pitch to be **presented and voiced by the participant or teammate**. `scripts/build_video.py` creates the complete visual cut; the final voice must therefore be Ermir (or a teammate), not synthetic TTS.
+The Analytics Cup 2.0 rules require the public YouTube pitch to be **at most one minute** and **presented and voiced by the participant or teammate**. `scripts/build_video.py` creates the complete visual cut; the final voice must therefore be Ermir (or a teammate), not synthetic TTS.
 
-## Final narration — 106 words
+## Final narration — 107 words
 
-**0–8.5 s — Problem**
+**0–10 s — Problem**
 
-“A line break is only the start. Can the defence reopen and restore lateral coverage? Static compactness misses that.”
+“A line break is only the start. The real question is whether the defence can reopen and restore lateral coverage.”
 
-**8.5–21 s — Metric**
+**10–22 s — Metric**
 
-“I built Defensive Re-Expansion Debt, or DRED. It compares live width with each team's normal width for that phase. DRED intensity rises when the defence stays abnormally narrow.”
+“I built Defensive Re-Expansion Debt, or DRED. It measures how long a defence stays abnormally narrow relative to its own normal width.”
 
-**21–40 s — Primary validation**
+**22–38 s — Time-aligned validation**
 
-“Across 603 line-breaking possessions in ten official matches, higher DRED intensity was associated with greater SkillCorner EPV gain after controlling duration, starting EPV and static width. Eight matches were positive.”
+“Across 602 second-last-line-break events in ten official matches, higher DRED intensity was associated with greater SkillCorner EPV gain measured over the same recovery window. Nine of ten matches were positive.”
 
-**40–50 s — Mechanism**
+**38–46.5 s — Mechanism**
 
-“Body Pose supports the mechanism: contracted defences were less outward-oriented in both games.”
+“Body Pose supports the mechanism: contracted defences were less outward-oriented in both available games.”
 
-**50–58.5 s — Close**
+**46.5–58.5 s — Close**
 
-“DRED is an open-source coaching diagnostic for failed recovery after penetration—not a black-box prediction score.”
+“DRED is open source, reproducible, and designed as a coaching diagnostic for failed recovery after penetration—not a black-box prediction score.”
 
 ## Recording target
 
 - Speak naturally at roughly 110–120 words/minute.
-- Aim for 54–58 seconds of voice; never rush the statistics.
+- Aim for 54–58 seconds of voice; leave small pauses between the five sections.
 - Record in a quiet room close to the microphone, with no music underneath the raw take.
 - Do not claim causality or call DRED a pre-break prediction model.
-- The detailed confidence interval stays on screen instead of burdening the narration.
+- Do not try to read every statistic on screen; the voice carries the story, the figure carries the detail.
+
+## Visual hierarchy
+
+1. Problem: recovery after penetration, not static compactness.
+2. Metric: abnormal lateral contraction relative to the team's own contextual width.
+3. Validation: EPV and DRED use the **same recovery window**; adjusted partial-rank 0.224, 602 events, 9/10 matches positive.
+4. Mechanism: Body Pose direction agrees in both available matches.
+5. Close: open-source coaching diagnostic.
 
 ## Build the visual cut
 
