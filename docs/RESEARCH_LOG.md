@@ -106,3 +106,22 @@ Results:
 - a 10,000-repetition within-match permutation of adjusted DRED residuals gives null mean approximately zero, 95% null interval **-0.088 to 0.083**, with the observed **0.174** outside that range (one-sided empirical p **0.0001**).
 
 These checks reduce concern that the EPV relationship is an artifact of one match, one exact DRED threshold, or the 10-second horizon. They do not turn the observational association into a causal effect.
+
+## 2026-10-13 — Post-submission adversarial temporal audit
+
+A second post-submission audit deliberately tested whether the EPV result was direction-specific, event-local and temporally aligned. This work remains outside the frozen `8TTF3B` evidence set.
+
+Key findings:
+
+- direction specificity is strong: DRED contraction adjusted **r=0.174**, width-expansion placebo **r=-0.125**, absolute-width abnormality placebo **r=0.011**;
+- pre-break contraction is much weaker (**r=0.057**) and the previous second-last break by the same defending team is approximately null (**r=-0.002**);
+- adding richer context (attacking progress/location, opponents bypassed, pressure, channel, third and OOP phase) leaves adjusted **r=0.157** on 602 events;
+- leave-one-defending-team-out estimates are all positive (**0.148–0.210**), and both chronological halves remain positive (**0.165** early, **0.189** late);
+- a leave-one-match-out incremental regression gets lower held-out MSE after adding DRED in **7/10** matches, with **2.47%** weighted MSE reduction;
+- the effect is not unique to second-last-line breaks: first-line breaks are approximately null (**r=-0.011**), while last-line breaks are also positive (**r=0.173**).
+
+The most important temporal check changed the preferred interpretation. When DRED is computed only from reliable tracking frames that occur before the triggering player possession ends, the association is near zero in the first 0.5–2 seconds and reaches only about **r=0.10** over the full action-observable sample. DRED therefore behaves like a recovery-process metric rather than an instantaneous action predictor.
+
+A recovery-window-aligned EPV endpoint was then constructed using only player-possession EPV states from the same attacking team, same phase and same DRED window. Net EPV gain over that shared window has adjusted **r=0.224**, median per-match **0.209**, is positive in **9/10** matches and has match-bootstrap 95% interval **0.068–0.330**. This is cleaner contemporaneous validation for the recovery construct, but it is explicitly post-submission and non-causal.
+
+Full details are reproduced by `make adversarial` and tracked in `docs/POST_SUBMISSION_ADVERSARIAL_AUDIT.md`.

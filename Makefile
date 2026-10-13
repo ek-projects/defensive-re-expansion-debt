@@ -1,7 +1,7 @@
 PYTHON ?= python3
 VENDOR := vendor/skillcorner-opendata
 
-.PHONY: install vendor data data-public-all validate validate-public-all epv robustness focused focused-public-all shot-audit case bodypose-data bodypose test all clean-derived
+.PHONY: install vendor data data-public-all validate validate-public-all epv robustness adversarial hardening focused focused-public-all shot-audit case bodypose-data bodypose test all clean-derived
 
 install:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -51,3 +51,8 @@ all: data validate epv case test
 
 clean-derived:
 	rm -rf data/processed outputs
+
+adversarial:
+	PYTHONPATH=src:scripts $(PYTHON) scripts/adversarial_epv_audit.py
+
+hardening: robustness adversarial test

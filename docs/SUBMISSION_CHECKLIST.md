@@ -11,6 +11,7 @@
 - Local annotated freeze tag: `submission-8TTF3B`.
 - Post-submission Body Pose end-to-end revalidation completed successfully on 2026-10-13; numerical results reproduced.
 - Post-submission EPV robustness audit completed on 2026-10-13 on isolated branch; 20/20 threshold × horizon combinations positive and all 10 leave-one-match-out estimates positive.
+- Post-submission adversarial/temporal audit completed on 2026-10-13; aligned-window net EPV adjusted r=0.224, median match r=0.209, positive in 9/10 matches. This is post-submission evidence only.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository
