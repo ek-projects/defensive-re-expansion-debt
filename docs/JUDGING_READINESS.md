@@ -28,9 +28,9 @@ Remaining opportunity: if a revised submission is published before the deadline,
 
 ## Open-source potential
 
-**State: materially improved in v2 candidate.** The core DRED formula now lives in a provider-agnostic tested API (`compute_dred`, `contraction_excess`, `standardize_width`), not only in analysis scripts. The Makefile has explicit dependencies for rebuilding derived data and the adversarial analysis is reproducible.
+**State: competition-grade v2 promoted.** The core DRED formula now lives in a provider-agnostic tested API (`compute_dred`, `contraction_excess`, `standardize_width`), not only in analysis scripts. The Makefile has explicit dependencies for rebuilding derived data and the adversarial analysis is reproducible.
 
-Fresh-clone derived-data reproduction is now verified: 10/10 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The v2 candidate is published on its own GitHub branch with a repository-scoped deploy key. CI covers Python 3.11–3.14, wheel build/install smoke testing and a submission-constraint audit; a manual workflow reproduces the full primary 10-match pipeline. Primary evidence is pinned to the 10 new Dynamic Events matches, while explicit research targets are limited to the frozen 20-match Analytics Cup tracking set across current/prior editions.
+Fresh-clone derived-data reproduction is now verified: 10/10 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The competition-grade v2 is now the public `main` branch; the original Pretalx submission snapshot remains preserved by tag `submission-8TTF3B`. A repository-scoped deploy key is used for controlled server pushes. CI covers Python 3.11–3.14, wheel build/install smoke testing and a submission-constraint audit; a manual workflow reproduces the full primary 10-match pipeline. Primary evidence is pinned to the 10 new Dynamic Events matches, while explicit research targets are limited to the frozen 20-match Analytics Cup tracking set across current/prior editions.
 
 
 ## 2026-10-13 competition-grade gate

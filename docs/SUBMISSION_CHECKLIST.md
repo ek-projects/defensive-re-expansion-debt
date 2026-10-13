@@ -15,11 +15,12 @@
 - Submission-v2 candidate exposes DRED as a provider-agnostic tested Python API; one-match integration regeneration shows zero numeric drift in DRED outputs.
 - Fresh-clone derived-data smoke test completed: 9/9 tests, robustness/adversarial JSON identical, aligned-validation figure SHA-256 identical.
 - Clean temporary virtualenv install completed successfully; package import and API smoke test passed.
-- GitHub deploy-key publication path verified; `submission-v2-candidate` is public while `main` remains frozen.
+- GitHub deploy-key publication path verified. Competition-grade v2 was promoted to public `main` on 2026-10-13 after branch CI passed; the original submitted commit remains preserved by `submission-8TTF3B`.
 - Competition-grade CI added for Python 3.11–3.14 plus wheel build/clean-install smoke test.
 - Manual full-reproduction GitHub workflow added for the official 10-match pipeline.
 - Release audit added: README limits, MIT licence, no tracked competition data/media, and no wider-match execution path.
 - V2 primary data scope hard-pinned to the 10 new Dynamic Events IDs; optional 20-match research path is frozen to Analytics Cup current/prior tracking IDs only.
+- Public `main` promotion commit before final status note: `2a01a7bebab549142f12daa191c75624306557d9`; GitHub CI on `main` completed successfully.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository
