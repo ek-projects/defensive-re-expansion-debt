@@ -12,7 +12,10 @@ import numpy as np
 import pandas as pd
 from scipy.stats import binomtest, rankdata, wilcoxon
 
-from defensive_recovery.competition import OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET
+from defensive_recovery.competition import (
+    ANALYTICS_CUP_TRACKING_MATCH_ID_SET,
+    OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET,
+)
 
 PRIMARY = "width_contract_auc_10s"
 STATIC = "width_abs_z_at_break"
@@ -363,16 +366,18 @@ def main() -> None:
     ap.add_argument("--raw", type=Path, default=Path("data/raw"))
     ap.add_argument("--outputs", type=Path, default=Path("outputs"))
     ap.add_argument("--figures", type=Path, default=Path("figures"))
+    ap.add_argument("--all-competition-matches", action="store_true", help="research extension over the frozen 20-match Analytics Cup tracking set")
     args = ap.parse_args()
     args.outputs.mkdir(parents=True, exist_ok=True)
     episodes = pd.read_csv(args.episodes)
-    episodes = episodes[episodes["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
+    allowed = ANALYTICS_CUP_TRACKING_MATCH_ID_SET if args.all_competition_matches else OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET
+    episodes = episodes[episodes["match_id"].astype(int).isin(allowed)].copy()
     for c in ["lead_to_shot", "lead_to_goal"]:
         episodes[c] = episodes[c].astype(str).str.lower().isin(["true", "1", "yes"])
     enriched = enrich(episodes, args.raw)
     enriched.to_csv(args.outputs / "episodes_enriched.csv", index=False)
     matches = pd.read_csv(args.matches)
-    matches = matches[matches["match_id"].astype(int).isin(OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET)].copy()
+    matches = matches[matches["match_id"].astype(int).isin(allowed)].copy()
     result = analyze(enriched, matches)
     (args.outputs / "dred_validation.json").write_text(json.dumps(result, indent=2, sort_keys=True))
     text = report(result)

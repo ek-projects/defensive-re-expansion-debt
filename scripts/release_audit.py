@@ -67,7 +67,10 @@ def main() -> None:
     for scope_file in executable_scope_files:
         scope_text = scope_file.read_text(encoding="utf-8")
         if "all-public-matches" in scope_text or "public-all" in scope_text:
-            errors.append(f"wider public-match execution path remains in {scope_file.relative_to(ROOT)}")
+            errors.append(f"legacy unrestricted public-match execution path remains in {scope_file.relative_to(ROOT)}")
+    competition_text = (ROOT / "src/defensive_recovery/competition.py").read_text(encoding="utf-8")
+    if "ANALYTICS_CUP_TRACKING_MATCH_IDS" not in competition_text:
+        errors.append("frozen 20-match Analytics Cup tracking whitelist is missing")
 
     required_paths = [
         "pyproject.toml",

@@ -16,7 +16,7 @@ make release-audit
 ## Project boundaries
 
 - The reusable metric lives under `src/defensive_recovery/`; competition-specific analysis belongs in `scripts/`.
-- Competition-data workflows are hard-pinned to the 10 official Analytics Cup match IDs in `defensive_recovery.competition`.
+- Primary submission workflows are pinned to the 10 new Dynamic Events match IDs. Explicit research workflows may use only the frozen 20-match Analytics Cup tracking set (current + prior edition) in `defensive_recovery.competition`; arbitrary external match IDs are not allowed.
 - Never commit competition datasets, downloaded tracking, Body Pose archives, generated video, or derived `outputs/`.
 - Changes to the DRED formula must include unit tests and an explicit note about numerical compatibility with the frozen competition definition.
 - Statistical extensions should preserve negative/confounded findings and avoid causal or pre-break prediction claims unsupported by the design.

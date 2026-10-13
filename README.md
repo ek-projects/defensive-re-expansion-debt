@@ -96,7 +96,7 @@ Body Pose is optional because the two archives total about 1.2 GB:
 make bodypose
 ```
 
-Every runnable competition-data target is pinned to the 10 official match IDs encoded in `defensive_recovery.competition`; arbitrary or wider match fetching is intentionally rejected.
+Primary submission targets are pinned to the 10 new Dynamic Events matches. The historical 20-match tracking research scope is separately available through explicitly named `*-competition-20` targets and is frozen to the 20 matches supplied across Analytics Cup editions; arbitrary match IDs are rejected.
 
 ## Interpretation
 

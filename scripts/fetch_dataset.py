@@ -9,7 +9,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from defensive_recovery.competition import OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET
+from defensive_recovery.competition import (
+    ANALYTICS_CUP_TRACKING_MATCH_ID_SET,
+    OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET,
+)
 
 MEDIA_BASE = "https://media.githubusercontent.com/media/SkillCorner/opendata/master"
 SMALL_SUFFIXES = ("_match.json", "_dynamic_events.csv", "_phases_of_play.csv")
@@ -73,22 +76,25 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--vendor", type=Path, default=Path("vendor/skillcorner-opendata"))
     ap.add_argument("--out", type=Path, default=Path("data/raw"))
-    ap.add_argument("--match", action="append", dest="matches", help="optional subset of the 10 official Analytics Cup match IDs")
+    ap.add_argument("--match", action="append", dest="matches", help="optional subset of the frozen 20-match Analytics Cup tracking set")
+    ap.add_argument("--all-competition-matches", action="store_true", help="fetch all 20 allowed Analytics Cup tracking matches")
     args = ap.parse_args()
     matches = json.loads((args.vendor / "data/matches.json").read_text())
     available = {str(m["id"]) for m in matches}
-    official = {str(mid) for mid in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET}
-    missing = sorted(official - available)
+    primary = {str(mid) for mid in OFFICIAL_DYNAMIC_EVENT_MATCH_ID_SET}
+    allowed = {str(mid) for mid in ANALYTICS_CUP_TRACKING_MATCH_ID_SET}
+    required = allowed if args.all_competition_matches else primary
+    missing = sorted(required - available)
     if missing:
-        raise RuntimeError(f"official Analytics Cup matches missing from vendor dataset: {missing}")
+        raise RuntimeError(f"required Analytics Cup matches missing from vendor dataset: {missing}")
     if args.matches:
         wanted = set(args.matches)
-        disallowed = sorted(wanted - official)
-        if disallowed:
-            ap.error(f"--match is restricted to official Analytics Cup IDs; rejected: {disallowed}")
+        outside_scope = sorted(wanted - allowed)
+        if outside_scope:
+            ap.error(f"--match must be one of the frozen Analytics Cup tracking IDs: {outside_scope}")
         ids = sorted(wanted, reverse=True)
     else:
-        ids = sorted(official, reverse=True)
+        ids = sorted(required, reverse=True)
     args.out.mkdir(parents=True, exist_ok=True)
     failures = []
     for i, mid in enumerate(ids, 1):

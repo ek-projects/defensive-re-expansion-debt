@@ -1,7 +1,7 @@
 PYTHON ?= python3
 VENDOR := vendor/skillcorner-opendata
 
-.PHONY: install vendor data validate epv robustness adversarial hardening focused shot-audit case bodypose-data bodypose test release-audit all clean-derived
+.PHONY: install vendor data data-competition-20 validate validate-competition-20 epv robustness adversarial hardening focused focused-competition-20 shot-audit case bodypose-data bodypose test release-audit all clean-derived
 
 install:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -12,8 +12,14 @@ vendor:
 data: vendor
 	PYTHONPATH=src $(PYTHON) scripts/fetch_dataset.py
 
+data-competition-20: vendor
+	PYTHONPATH=src $(PYTHON) scripts/fetch_dataset.py --all-competition-matches
+
 validate: data
 	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py
+
+validate-competition-20: data-competition-20
+	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py --all-competition-matches
 
 epv: validate
 	PYTHONPATH=src $(PYTHON) scripts/validate_epv.py
@@ -23,6 +29,9 @@ robustness: validate
 
 focused: validate
 	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py
+
+focused-competition-20: validate-competition-20
+	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py --all-competition-matches
 
 shot-audit: focused
 

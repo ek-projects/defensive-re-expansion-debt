@@ -30,7 +30,7 @@ Remaining opportunity: if a revised submission is published before the deadline,
 
 **State: materially improved in v2 candidate.** The core DRED formula now lives in a provider-agnostic tested API (`compute_dred`, `contraction_excess`, `standardize_width`), not only in analysis scripts. The Makefile has explicit dependencies for rebuilding derived data and the adversarial analysis is reproducible.
 
-Fresh-clone derived-data reproduction is now verified: 9/9 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The v2 candidate is published on its own GitHub branch with a repository-scoped deploy key. CI now covers Python 3.11–3.14, wheel build/install smoke testing and a submission-constraint audit; a manual workflow reproduces the full official 10-match pipeline. Competition-data execution is hard-pinned to the 10 official match IDs.
+Fresh-clone derived-data reproduction is now verified: 10/10 tests pass, post-submission JSON outputs match exactly and the generated aligned-EPV figure has the same SHA-256. A clean temporary virtualenv install also succeeds. The v2 candidate is published on its own GitHub branch with a repository-scoped deploy key. CI covers Python 3.11–3.14, wheel build/install smoke testing and a submission-constraint audit; a manual workflow reproduces the full primary 10-match pipeline. Primary evidence is pinned to the 10 new Dynamic Events matches, while explicit research targets are limited to the frozen 20-match Analytics Cup tracking set across current/prior editions.
 
 
 ## 2026-10-13 competition-grade gate
@@ -41,4 +41,4 @@ Fresh-clone derived-data reproduction is now verified: 9/9 tests pass, post-subm
 - Automated release audit rejects tracked competition data/media and wider-match execution paths.
 - Public CI definition: Python 3.11–3.14 tests + release audit + wheel build/isolated-install smoke test.
 - Manual full-reproduction workflow: official 10-match rebuild + robustness/adversarial audit, with Body Pose optional.
-- Historical wider public-data exploration remains recorded in the research log for transparency, but the v2 executable pipeline does not expose it and no result from outside the frozen 10-match scope is submission evidence.
+- The historical 20-match tracking exploration is reproducible through explicitly named research targets and remains separate from the 10-match primary evidence. The 20-match whitelist corresponds to Analytics Cup current/prior tracking data; arbitrary external matches are rejected.

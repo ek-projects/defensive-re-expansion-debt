@@ -19,7 +19,7 @@
 - Competition-grade CI added for Python 3.11–3.14 plus wheel build/clean-install smoke test.
 - Manual full-reproduction GitHub workflow added for the official 10-match pipeline.
 - Release audit added: README limits, MIT licence, no tracked competition data/media, and no wider-match execution path.
-- V2 executable data scope hard-pinned to the 10 official match IDs.
+- V2 primary data scope hard-pinned to the 10 new Dynamic Events IDs; optional 20-match research path is frozen to Analytics Cup current/prior tracking IDs only.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository
