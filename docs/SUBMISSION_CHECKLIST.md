@@ -14,8 +14,8 @@
 - [x] Shot-link duration confound documented and demoted.
 - [x] EPV validation implemented.
 - [x] Body Pose mechanism check implemented.
-- [ ] Public GitHub remote created when ready.
-- [ ] Fresh public clone reproduction test.
+- [x] Public GitHub remote created: https://github.com/NumeriaiOS/defensive-re-expansion-debt
+- [x] Fresh public clone reproduction test (5/5 tests passed).
 
 ## Evidence
 
@@ -29,7 +29,7 @@
 
 ## README / video
 
-- [ ] Final README word/image-count check after last edit.
+- [x] Final README word/image-count check after last edit (595 words, 2 figures).
 - [x] Video script rewritten around EPV + Body Pose.
 - [x] Matched case-study visual available for video.
 - [ ] Record narration.
