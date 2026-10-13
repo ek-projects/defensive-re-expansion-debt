@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from defensive_recovery.dred import compute_dred, contraction_excess
 from defensive_recovery.geometry import compute_shape_metrics
 from defensive_recovery.skillcorner import load_match_context, team_positions
 
@@ -126,7 +127,7 @@ def evaluate_line_breaks(match_dir: Path, frames: pd.DataFrame) -> pd.DataFrame:
             baseline_aucs[f"{col}_abs_z_at_break"] = float(vals[0])
             baseline_aucs[f"{col}_auc_10s"] = float(np.maximum(vals - 1.0, 0.0).sum() / 10.0)
             baseline_aucs[f"{col}_expand_auc_10s"] = float(np.maximum(signed - 1.0, 0.0).sum() / 10.0)
-            contract_excess = np.maximum(-signed - 1.0, 0.0)
+            contract_excess = contraction_excess(signed)
             baseline_aucs[f"{col}_contract_auc_10s"] = float(contract_excess.sum() / 10.0)
             baseline_aucs[f"{col}_contract_mean_10s"] = float(contract_excess.mean())
             baseline_aucs[f"{col}_contract_peak_10s"] = float(contract_excess.max())
@@ -136,8 +137,8 @@ def evaluate_line_breaks(match_dir: Path, frames: pd.DataFrame) -> pd.DataFrame:
         for horizon_s in (3, 5, 8, 10):
             hpost = post[post["frame"] <= start + horizon_s * 10]
             signed_w = hpost["z_width"].to_numpy(float)
-            baseline_aucs[f"width_contract_auc_{horizon_s}s"] = float(
-                np.maximum(-signed_w - 1.0, 0.0).sum() / 10.0
+            baseline_aucs[f"width_contract_auc_{horizon_s}s"] = (
+                compute_dred(signed_w, fps=10.0).integral if len(signed_w) else 0.0
             )
         recovered_sec = np.nan
         hold = 10

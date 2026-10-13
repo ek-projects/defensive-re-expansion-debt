@@ -4,6 +4,9 @@ import argparse
 import json
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.stats import binomtest, rankdata, spearmanr
@@ -782,6 +785,29 @@ def analyze(
     return result
 
 
+
+def write_aligned_figure(result: dict, matches_path: Path, figure_path: Path) -> None:
+    rows = pd.DataFrame(
+        result["recovery_window_aligned_epv"]["net_epv_gain_over_recovery_window"]["per_match"]
+    )
+    matches = pd.read_csv(matches_path)[["match_id", "home_team", "away_team"]].drop_duplicates("match_id")
+    rows = rows.merge(matches, on="match_id", how="left")
+    rows["fixture"] = (
+        rows["home_team"].fillna(rows["match_id"].astype(str))
+        + " – "
+        + rows["away_team"].fillna("")
+    )
+    rows = rows.sort_values("partial_rank")
+    figure_path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(8, 5.5))
+    ax.barh(rows["fixture"], rows["partial_rank"])
+    ax.axvline(0, linewidth=1)
+    ax.set_xlabel("Partial rank correlation: DRED intensity vs aligned net EPV gain")
+    ax.set_title("Recovery-window EPV validation across 10 official matches")
+    fig.tight_layout()
+    fig.savefig(figure_path, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
 def _fmt(value: float | None, digits: int = 3) -> str:
     if value is None or not np.isfinite(value):
         return "NA"
@@ -936,6 +962,8 @@ def main() -> None:
     ap.add_argument("--processed", type=Path, default=Path("data/processed"))
     ap.add_argument("--raw", type=Path, default=Path("data/raw"))
     ap.add_argument("--outputs", type=Path, default=Path("outputs"))
+    ap.add_argument("--matches", type=Path, default=Path("data/processed/match_summary.csv"))
+    ap.add_argument("--figure", type=Path, default=Path("figures/dred_epv_aligned_validation.png"))
     ap.add_argument("--report", type=Path, default=Path("docs/POST_SUBMISSION_ADVERSARIAL_AUDIT.md"))
     args = ap.parse_args()
 
@@ -954,6 +982,7 @@ def main() -> None:
     md_path.write_text(rendered)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(rendered)
+    write_aligned_figure(result, args.matches, args.figure)
     print(rendered)
 
 

@@ -15,19 +15,19 @@ data: vendor
 data-public-all: vendor
 	PYTHONPATH=src $(PYTHON) scripts/fetch_dataset.py --all-public-matches
 
-validate:
+validate: data
 	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py
 
 validate-public-all:
 	PYTHONPATH=src $(PYTHON) scripts/batch_validate.py --all-public-matches
 
-epv:
+epv: validate
 	PYTHONPATH=src $(PYTHON) scripts/validate_epv.py
 
-robustness:
+robustness: validate
 	PYTHONPATH=src $(PYTHON) scripts/robustness_epv.py
 
-focused:
+focused: validate
 	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py
 
 shot-audit: focused
@@ -35,7 +35,7 @@ shot-audit: focused
 focused-public-all:
 	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py --all-public-matches
 
-case:
+case: focused
 	PYTHONPATH=src $(PYTHON) scripts/case_study.py
 
 bodypose-data:
@@ -52,7 +52,7 @@ all: data validate epv case test
 clean-derived:
 	rm -rf data/processed outputs
 
-adversarial:
+adversarial: focused
 	PYTHONPATH=src:scripts $(PYTHON) scripts/adversarial_epv_audit.py
 
 hardening: robustness adversarial test

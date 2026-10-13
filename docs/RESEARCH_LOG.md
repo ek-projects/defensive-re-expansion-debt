@@ -125,3 +125,11 @@ The most important temporal check changed the preferred interpretation. When DRE
 A recovery-window-aligned EPV endpoint was then constructed using only player-possession EPV states from the same attacking team, same phase and same DRED window. Net EPV gain over that shared window has adjusted **r=0.224**, median per-match **0.209**, is positive in **9/10** matches and has match-bootstrap 95% interval **0.068–0.330**. This is cleaner contemporaneous validation for the recovery construct, but it is explicitly post-submission and non-causal.
 
 Full details are reproduced by `make adversarial` and tracked in `docs/POST_SUBMISSION_ADVERSARIAL_AUDIT.md`.
+
+## 2026-10-13 — v2 candidate: reusable DRED API
+
+The candidate branch extracts the final DRED definition into `src/defensive_recovery/dred.py` with provider-agnostic functions for contextual width standardisation, frame-level contraction excess and DRED summaries. The competition pipeline now calls the same library function rather than carrying a second inline implementation.
+
+Integration validation on official match 1925299 regenerated all 134 line-break episodes. DRED/width-contraction output columns compared against the pre-refactor processed file with maximum absolute difference **0.0**. Core tests expanded from 5 to **9** and pass.
+
+This refactor changes packaging and reuse only; it does not change the metric or frozen submission evidence.

@@ -27,17 +27,29 @@ Two related outputs are useful:
 
 The window is capped at 10 seconds and ends earlier when the attacking phase ends.
 
-## External validation with EPV
+The metric is also available as a small reusable Python API:
 
-The primary validation uses the **10 official Analytics Cup matches with Dynamic Events**. SkillCorner EPV estimates near-term scoring value, and `possession_epv_delta_for` measures how that value changes during an individual player possession.
+```python
+from defensive_recovery import compute_dred
+metrics = compute_dred(z_width, fps=10)
+print(metrics.intensity, metrics.integral)
+```
 
-Among **603 second-last-line-break player possessions** with EPV, raw DRED-intensity versus EPV gain has Spearman rho **0.126**. Duration matters, so the main analysis does not stop there: within each match I rank-adjust for recovery-window duration, player-possession duration, EPV at the start of the action, and static defensive width at the break.
+The API takes contextual width z-scores, so the same DRED definition can be reused with other tracking providers or baseline strategies.
 
-The adjusted pooled partial-rank association is **0.174**. More importantly, the per-match partial association is positive in **8/10** matches, with median **0.154** and a match-bootstrap 95% interval of **0.044 to 0.268**.
+## External validation with recovery-window EPV
 
-![Per-match EPV validation](figures/dred_epv_validation.png)
+The validation uses the **10 official Analytics Cup matches with Dynamic Events**. The initial submission compared 10-second DRED intensity with SkillCorner EPV change during the triggering player possession. That association is reproducible (adjusted partial-rank **0.174**, positive in **8/10** matches), but a post-submission temporal audit showed that DRED restricted strictly to the triggering action is much weaker. That is consistent with DRED being a recovery-process metric, and it motivated a cleaner time-aligned outcome.
 
-The effect is modest, which is expected for a single interpretable structural variable, but it persists after controlling the main duration and context confounds.
+For each second-last-line break, I now measure **net EPV gain over the same recovery window as DRED**: starting EPV comes from the triggering possession, and final EPV is the last completed player-possession end value from the same attacking team and phase before the DRED window closes. No possession end beyond the recovery-window boundary is used.
+
+Among **602** eligible events, raw DRED intensity versus aligned net EPV gain has Spearman rho **0.226**. Within each match I rank-adjust for recovery-window duration, triggering-action duration, starting EPV and static defensive width at the break. The adjusted pooled partial-rank association is **0.224**. The per-match association is positive in **9/10** matches, with median **0.209** and match-bootstrap 95% interval **0.068 to 0.330**.
+
+![Recovery-window EPV validation](figures/dred_epv_aligned_validation.png)
+
+Adversarial checks support direction and event locality: width expansion is negative (**-0.125**), absolute width abnormality is approximately null (**0.011**), pre-break contraction is much weaker (**0.057**) and the previous second-last break by the same defending team is approximately null (**-0.002**). A richer context adjustment remains positive (**0.157**). The effect is not unique to second-last breaks: last-line breaks are also positive, so DRED should be interpreted as a recovery diagnostic after deep penetration rather than a line-specific law.
+
+This aligned-window analysis was developed **after the initial submission**. It is robustness evidence, not a pre-specified causal test.
 
 ## Body Pose mechanism check
 
@@ -67,7 +79,13 @@ make install
 make all
 ```
 
-`make all` downloads/verifies the official tracking data, computes DRED, runs EPV validation, builds the matched case study and runs tests.
+`make all` downloads/verifies the official tracking data, computes DRED, reproduces the frozen submission analyses, builds the matched case study and runs tests.
+
+Post-submission robustness and adversarial temporal checks are reproduced with:
+
+```bash
+make hardening
+```
 
 Body Pose is optional because the two archives total about 1.2 GB:
 
