@@ -24,7 +24,7 @@ Use `docs/RELATED_WORK.md` and avoid “first ever” wording.
 
 **State: strong.** The submitted YouTube video is public, 59 seconds, and YouTube automatic captions confirm spoken English narration matching the intended script. The core story is simple: snapshot compactness misses whether the defence reopens after penetration. The current submitted video remains directionally correct, but the candidate README now explains the cleaner recovery-window validation.
 
-Remaining opportunity: if a revised submission is published before the deadline, ensure the video and README tell the same validation story. Do not overload the one-minute pitch with robustness statistics.
+Decision: keep the already-submitted one-minute video unchanged. It remains directionally correct and compliant; the cleaner recovery-window validation stays in the repository as post-submission hardening. Replace the video only if a factual error is discovered.
 
 ## Open-source potential
 

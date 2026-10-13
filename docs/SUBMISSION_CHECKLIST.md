@@ -59,6 +59,7 @@
 - [x] Matched case-study visual available for video.
 - [x] Submitted public video contains spoken English narration matching the script (verified through YouTube automatic captions). Speaker identity is not machine-verifiable; competition rules require participant/teammate voice.
 - [x] Submitted YouTube video is public and 59 seconds.
+- [x] Keep the submitted video unchanged unless a factual error is found; the post-submission scientific hardening does not require a new recording.
 - [ ] Check readability on mobile.
 
 ## Submission
