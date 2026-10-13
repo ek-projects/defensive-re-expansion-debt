@@ -1,5 +1,17 @@
 # Submission Checklist
 
+## Verified submission status — 2026-10-13
+
+- Pretalx receipt confirmed by official email.
+- Proposal code: `8TTF3B`.
+- Submitted project title: **Defensive Re-Expansion Debt (DRED)**.
+- Submitted GitHub URL: `https://github.com/ek-projects/defensive-re-expansion-debt`.
+- Submitted YouTube URL: `https://youtu.be/qDVTA8S03HE`.
+- Submission snapshot commit: `55b0d829ff36918d2980d00266ced74c7a5c5d28`.
+- Local annotated freeze tag: `submission-8TTF3B`.
+- Post-submission Body Pose end-to-end revalidation completed successfully on 2026-10-13; numerical results reproduced.
+- Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
+
 ## Repository
 
 - [x] Primary metric frozen: Defensive Re-Expansion Debt (DRED).
@@ -41,7 +53,7 @@
 ## Submission
 
 - [ ] Confirm Europe / Football in Pretalx.
-- [ ] Paste public repository URL.
-- [ ] Add public video URL.
+- [x] Paste public repository URL.
+- [x] Add public video URL.
 - [ ] Re-check rendered README from GitHub.
-- [ ] Submit before 18 December 2026.
+- [x] Submit before 18 December 2026 — received by Pretalx on 13 October 2026 (`8TTF3B`).
