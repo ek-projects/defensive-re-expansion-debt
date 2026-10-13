@@ -1,7 +1,7 @@
 PYTHON ?= python3
 VENDOR := vendor/skillcorner-opendata
 
-.PHONY: install vendor data data-public-all validate validate-public-all epv focused focused-public-all shot-audit case bodypose-data bodypose test all clean-derived
+.PHONY: install vendor data data-public-all validate validate-public-all epv robustness focused focused-public-all shot-audit case bodypose-data bodypose test all clean-derived
 
 install:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -23,6 +23,9 @@ validate-public-all:
 
 epv:
 	PYTHONPATH=src $(PYTHON) scripts/validate_epv.py
+
+robustness:
+	PYTHONPATH=src $(PYTHON) scripts/robustness_epv.py
 
 focused:
 	PYTHONPATH=src $(PYTHON) scripts/focused_analysis.py

@@ -10,6 +10,7 @@
 - Submission snapshot commit: `55b0d829ff36918d2980d00266ced74c7a5c5d28`.
 - Local annotated freeze tag: `submission-8TTF3B`.
 - Post-submission Body Pose end-to-end revalidation completed successfully on 2026-10-13; numerical results reproduced.
+- Post-submission EPV robustness audit completed on 2026-10-13 on isolated branch; 20/20 threshold × horizon combinations positive and all 10 leave-one-match-out estimates positive.
 - Current documented status: **received / awaiting review**; receipt is not acceptance or finalist selection.
 
 ## Repository

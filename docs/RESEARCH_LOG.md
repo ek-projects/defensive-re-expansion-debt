@@ -90,3 +90,19 @@ DRED is best treated as an interpretable **defensive recovery diagnostic**. The 
 2. the expected body-orientation mechanism appears in both available Body Pose matches.
 
 The negative and confounded results remain documented to avoid turning the project into post-hoc metric selection.
+
+## 2026-10-13 — Post-submission robustness audit
+
+This analysis was run **after** Pretalx submission `8TTF3B` and is therefore robustness evidence, not pre-specified confirmatory evidence. The frozen submission remains commit `55b0d829ff36918d2980d00266ced74c7a5c5d28`.
+
+The EPV pipeline was extended on the isolated `post-submission-hardening` branch to recompute DRED directly from frame-level `z_width` under five abnormal-contraction thresholds (0.50, 0.75, 1.00, 1.25, 1.50) and four recovery horizons (3, 5, 8, 10 seconds).
+
+Results:
+
+- the recomputed primary 1.0-threshold / 10-second DRED intensity matches the submitted stored metric to numerical precision (maximum absolute difference `3.33e-16`);
+- all **20/20** threshold × horizon combinations retain a positive duration/context-adjusted association with event-local EPV gain;
+- adjusted partial-rank associations range from **0.064 to 0.201**, median **0.154**;
+- leave-one-match-out estimates are positive for all ten omissions, range **0.151 to 0.209**;
+- a 10,000-repetition within-match permutation of adjusted DRED residuals gives null mean approximately zero, 95% null interval **-0.088 to 0.083**, with the observed **0.174** outside that range (one-sided empirical p **0.0001**).
+
+These checks reduce concern that the EPV relationship is an artifact of one match, one exact DRED threshold, or the 10-second horizon. They do not turn the observational association into a causal effect.
